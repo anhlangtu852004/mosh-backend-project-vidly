@@ -3,6 +3,7 @@ const { User, validateUser } = require("../models/user");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // router.get('/', async (req, res) => {
 //   const movies = await Movie.find().sort('name');
@@ -21,8 +22,8 @@ router.post("/", async (req, res) => {
     user.password
   );
   if (!inValidPassword) return res.status(400).send("Invalid user or password");
-
-  res.send(true);
+  const token = jwt.sign({ _id: user._id }, process.env.vidly_jwtPrivateKey);
+  res.send(token);
 });
 
 // router.put('/:id', async (req, res) => {
