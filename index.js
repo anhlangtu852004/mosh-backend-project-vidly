@@ -20,7 +20,7 @@ if (!process.env.vidly_jwtPrivateKey) {
 }
 
 mongoose
-  .connect("mongodb://localhost/vidly")
+  .connect("mongodb://127.0.0.1/vidly")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
 
