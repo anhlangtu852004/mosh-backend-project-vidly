@@ -5,6 +5,8 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//middlware
+
 // router.get('/', async (req, res) => {
 //   const movies = await Movie.find().sort('name');
 //   res.send(movies);
@@ -14,7 +16,7 @@ router.post("/", async (req, res) => {
   const { error } = validateAuthen(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send("Invalid user or password");
 
   const inValidPassword = await bcrypt.compare(
@@ -22,7 +24,8 @@ router.post("/", async (req, res) => {
     user.password
   );
   if (!inValidPassword) return res.status(400).send("Invalid user or password");
-  const token = jwt.sign({ _id: user._id }, process.env.vidly_jwtPrivateKey);
+  // const token = jwt.sign({ _id: user._id }, process.env.vidly_jwtPrivateKey);
+  const token = user.generateAuthToken();
   res.send(token);
 });
 
