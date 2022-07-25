@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+require("express-async-errors");
 require("dotenv").config();
 const genres = require("./routes/genres");
 const customers = require("./routes/customers");
@@ -8,6 +8,8 @@ const user = require("./routes/users");
 const authen = require("./routes/authens");
 const express = require("express");
 const app = express();
+
+const error = require("./middleware/error");
 
 // if (!config.get("jwtPrivateKey")) {
 //   console.error("jwtPrivateKey is not define");
@@ -30,6 +32,8 @@ app.use("/api/customers", customers);
 app.use("/api/movies", movies);
 app.use("/api/users", user);
 app.use("/api/authens", authen);
+
+app.use(error);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
