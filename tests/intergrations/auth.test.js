@@ -9,7 +9,7 @@ describe("auth midleware", () => {
   });
   afterEach(async () => {
     await Genre.remove({});
-    server.close();
+    await server.close();
   });
   let token;
   const exec = () => {

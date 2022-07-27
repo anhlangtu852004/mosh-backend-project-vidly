@@ -31,8 +31,13 @@ userSchema.methods.generateAuthToken = function () {
     { _id: this._id, isAdmin: this.isAdmin },
     process.env.vidly_jwtPrivateKey
   );
+
   return token;
 };
+//co the tao static method cho class cha( class User)
+// userSchema.statics.lookup = function(){
+//   ///// logic here
+// }
 
 const User = mongoose.model("User", userSchema);
 
